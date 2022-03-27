@@ -5,11 +5,19 @@ const minus = document.getElementById("minus");
 const number = document.querySelector("span");
 number.innerText = 0;
 
+const ADD = "ADD";
+const MINUS = "MINUS";
+
 // reducer : 모든 데이터 변경에 대한 책임 -> 새로운 상태를 반환
 const countModifier = (count = 0, action) => {
-  if (action.type === "ADD") return count + 1;
-  if (action.type === "MINUS") return count - 1;
-  return count;
+  switch (action.type) {
+    case ADD:
+      return count + 1;
+    case MINUS:
+      return count - 1;
+    default:
+      return count;
+  }
 };
 
 const countStore = createStore(countModifier);
@@ -23,11 +31,11 @@ countStore.subscribe(onChange);
 
 const handleAdd = () => {
   // dispatch : reducer에 action 전송
-  countStore.dispatch({ type: "ADD" });
+  countStore.dispatch({ type: ADD });
 };
 
 const handleMinus = () => {
-  countStore.dispatch({ type: "MINUS" });
+  countStore.dispatch({ type: MINUS });
 };
 
 add.addEventListener("click", handleAdd);
